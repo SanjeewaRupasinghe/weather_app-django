@@ -1,4 +1,3 @@
-from django.http import HttpResponse
 from django.shortcuts import render
 import requests
 
@@ -13,20 +12,33 @@ def home(request):
 
     url=f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}"
     params = {
-        'units': 'metric'
+        'units': 'Metric'
     }
 
     response = requests.get(url,params=params).json()
 
-    print(response)
+    try:
+        
+        details={
+            'city':city,
+            'description':response['weather'][0]['description'],
+            'icon':response['weather'][0]['icon'],
+            'temperature':response['main']['temp'],
+            'humidity':response['main']['humidity'],
+            'wind_speed':convert_wind_speed(response['wind']['speed'])
+        }
 
-    description = response['weather'][0]['description']
-    temperature = response['main']['temp']
-    humidity = response['main']['humidity']
-    wind_speed = response['wind']['speed']
+        return render(request,'index.html',{'details':details})
 
-    return render(request,'index.html',{'description':description,'temperature':temperature,'humidity':humidity,'wind_speed':wind_speed})
+    except (KeyError, IndexError):
+        exception_occurred = True
 
+        return render(request,'index.html',{'exception_occurred':exception_occurred})
 
-
-# 99f4d251142c2387b38ce64a1496525c
+"""
+wind speed in m/s to km/h
+"""
+def convert_wind_speed(wind_speed):
+    # Convert wind speed from m/s to km/h
+    return wind_speed * 3.6
+    

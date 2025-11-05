@@ -1,0 +1,75 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+
+    <!-- TAILWIND CSS CDN -->
+    <!-- using cdn because this is testing project -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div
+      class="items-center gap-4 border mx-auto sm:w-[500px] p-12 mt-12 rounded-md shadow-sm hover:shadow-lg transition-all duration-300"
+    >
+      <h1 class="text-4xl font-bold text-center pb-8">Weather App</h1>
+      <form method="post" action="{% url 'home' %}">
+        {% csrf_token %}
+        <input
+          type="text"
+          placeholder="Enter city name"
+          class="border border-gray-300 rounded-md px-4 py-2 w-full"
+          name="city"
+          value="{{details.city}}"
+        />
+        <button class="bg-blue-500 text-white px-4 py-2 rounded-md mt-2 w-full">
+          Search
+        </button>
+      </form>
+
+      <div class="gap-4">
+        <!-- Error Message -->
+        {% if exception_occurred %}
+        <p class="text-red-500 text-center mt-8 py-4 border border-red-500 rounded-md"> 😢 City Not Found</p>
+        <!-- END Error Message -->
+        {% else %}
+        <!-- Weather Details -->
+        <h2 class="text-4xl font-bold text-center py-8">
+          {{details.city}}
+          <span class="text-2xl"
+            >{{ details.temperature }}
+            <sup>°C</sup>
+          </span>
+        </h2>
+        <div class="flex items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <span class="text-2xl">🌡️</span>
+            <p>Temperature: {{ details.temperature }}<sup>°C</sup></p>
+          </div>
+          <div class="flex items-center gap-2">
+            <p>{{ details.description }}</p>
+            <img
+              src="https://api.openweathermap.org/img/w/{{ details.icon }}.png"
+              alt="icon"
+            />
+          </div>
+        </div>
+        <div class="flex items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <span class="text-2xl">💧</span>
+            <p>Humidity: {{ details.humidity }} %</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <p>Wind: {{ details.wind_speed }} mph</p>
+            <span class="text-2xl">🌬️</span>
+          </div>
+        </div>
+        <!-- END Weather Details -->
+        {% endif %}
+      </div>
+    </div>
+  </body>
+</html>
