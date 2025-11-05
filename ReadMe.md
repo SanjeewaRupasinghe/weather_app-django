@@ -34,22 +34,13 @@ Simple Django application that displays current weather for a city using a publi
    # source .venv/bin/activate
    ```
 
-3. Install dependencies
-   ```bash
-   pip install -r requirements.txt
-   ```
-   If a requirements file is not present, you can install the basics:
-   ```bash
-   pip install django requests python-dotenv
-   ```
-
-4. Configure environment variables
+3. Configure environment variables
    - Create a `.env` file in the project root with:
      ```env
      API_KEY=your_api_key_here
      ````
 
-6. Run the development server
+4. Run the development server
    ```bash
    python manage.py runserver
    ```
