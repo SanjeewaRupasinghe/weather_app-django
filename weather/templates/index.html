@@ -11,9 +11,9 @@
     <!-- using cdn because this is testing project -->
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body>
+  <body class="bg-gradient-to-r from-sky-400 via-purple-500 to-pink-600">
     <div
-      class="items-center gap-4 border mx-auto sm:w-[500px] p-12 mt-12 rounded-md shadow-sm hover:shadow-lg transition-all duration-300"
+      class="items-center gap-4 border mx-auto sm:w-[500px] p-12 mt-12 rounded-md shadow-sm hover:shadow-lg transition-all duration-300 bg-blue-100"
     >
       <h1 class="text-4xl font-bold text-center pb-8">Weather App</h1>
       <form method="post" action="{% url 'home' %}">
@@ -33,7 +33,11 @@
       <div class="gap-4">
         <!-- Error Message -->
         {% if exception_occurred %}
-        <p class="text-red-500 text-center mt-8 py-4 border border-red-500 rounded-md"> 😢 City Not Found</p>
+        <p
+          class="text-red-500 text-center mt-8 py-4 border border-red-500 rounded-md"
+        >
+          😢 City Not Found
+        </p>
         <!-- END Error Message -->
         {% else %}
         <!-- Weather Details -->
